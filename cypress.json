@@ -1,5 +1,12 @@
 {
     "baseUrl": "http://localhost:3000",
     "viewportWidth": 1440,
-    "viewportHeight": 900
+    "viewportHeight": 900,
+    "dbConfig": {
+        "host": "ziggy.db.elephantsql.com",
+        "user": "hdwmrfwe",
+        "password": "uvSPn6f5d0Vn_t1QhfgJVZ6_PMqI8N-Y",
+        "dabatase": "hdwmrfwe",
+        "port": 5432
+    }
 }
