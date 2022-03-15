@@ -6,7 +6,6 @@ class Toast {
             .should('be.visible')
             .find('p')
             .should('have.text', expectText)
-
     }
 }
 

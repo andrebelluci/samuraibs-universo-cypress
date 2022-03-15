@@ -1,11 +1,14 @@
 import { el } from './elements'
 import toast from '../../components/toast'
+import icons from '../../components/icons'
+
 
 class LoginPage {
 
     //função executada automaticamente
     constructor() {
         this.toast = toast
+        this.icons = icons
     }
 
     go() {

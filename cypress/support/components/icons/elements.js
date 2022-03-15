@@ -1,0 +1,3 @@
+exports.el = {
+    icon: 'svg'
+}

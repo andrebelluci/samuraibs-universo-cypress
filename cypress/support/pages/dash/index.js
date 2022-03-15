@@ -1,9 +1,17 @@
-class DashPage {
+import toast from '../../components/toast'
+import icons from '../../components/icons'
+import { el } from './elements'
 
+class DashPage {
+    constructor() {
+        this.toast = toast
+        this.icons = icons
+    }
+    
     welcome(expectedText) {
-        cy.contains('div span', 'Bem-vindo,')
+        cy.contains(el.welcome, 'Bem-vindo,')
             .should('be.visible')
-        cy.contains('a strong', expectedText)
+        cy.contains(el.name, expectedText)
             .should('have.text', expectedText)
     }
 }
