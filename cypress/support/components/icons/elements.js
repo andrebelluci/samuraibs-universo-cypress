@@ -1,3 +1,3 @@
 exports.el = {
-    icon: 'svg'
+    icon: 'svg[stroke="currentColor"] path'
 }

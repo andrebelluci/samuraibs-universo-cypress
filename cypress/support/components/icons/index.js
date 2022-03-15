@@ -1,8 +1,9 @@
 import { el } from './elements'
 
 class Icons {
-    shouldBeVisible() {
+    shouldBeVisible(order) {
         cy.get(el.icon)
+            .eq(order)
             .should('be.visible')
     }
 }

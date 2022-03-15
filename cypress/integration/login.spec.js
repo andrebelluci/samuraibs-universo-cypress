@@ -24,11 +24,13 @@ describe('login', function () {
                 })
         })
         it('deve logar com sucesso', function () {
-            loginPage.go()
-            loginPage.form(user)
+            loginPage.go()            
+            loginPage.form(user)            
             loginPage.login()     
+            loginPage.icons.shouldBeVisible(0)
+            loginPage.icons.shouldBeVisible(1)
             dashPage.welcome(user.name)      
-            dashPage.icons.shouldBeVisible()            
+            dashPage.icons.shouldBeVisible(0)            
         })
     })
 
