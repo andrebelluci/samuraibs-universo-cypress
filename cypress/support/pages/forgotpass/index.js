@@ -1,7 +1,7 @@
 import { el } from './elements'
 import toast from '../../components/toast'
 
-class RecoverPage {
+class ForgotPassPage {
 
     //função executada automaticamente
     constructor() {
@@ -14,18 +14,14 @@ class RecoverPage {
 
     form(email) {
         cy.get(el.email)
+            .clear()
             .type(email)
     }
 
-    recover(){
-        cy.get(el.recoverButton)
+    submit(){
+        cy.contains('button[type=submit]', 'Recuperar')
             .click()
     } 
-    
-    alertHaveText(expectedText) {
-        cy.contains('.alert-error', expectedText)
-            .should('be.visible')
-    }
 }
 
-export default new RecoverPage()
+export default new ForgotPassPage()

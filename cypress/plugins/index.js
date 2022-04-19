@@ -33,21 +33,23 @@ module.exports = (on, config) => {
           if (error) {
             throw error
           }
-          resolve({success: result})
+          resolve({ success: result })
         })
       })
-    }
-  })
-
-  on('task', {
-    selectName(email) {
+    },
+    findToken(email) {
       return new Promise(function (resolve) {
-        pool.query('SELECT name FROM public.users WHERE email = $1', [email], function (error, result) {
-          if (error) {
-            throw error
-          }
-          resolve({success: result})
-        })
+        pool.query('select ut.token ' +
+          'from public.users u ' +
+          'inner join public.user_tokens ut ' +
+          'on u.id = ut.user_id ' +
+          'where u.email like $1 ' +
+          'order by ut.created_at', [email], function (error, result) {
+            if (error) {
+              throw error
+            }
+            resolve({ token: result.rows[0].token })
+          })
       })
     }
   })

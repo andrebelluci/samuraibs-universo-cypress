@@ -1,20 +1,10 @@
-import toast from '../../components/toast'
-import icons from '../../components/icons'
 import { el } from './elements'
+import header from '../../components/header'
 
 class DashPage {
     constructor() {
-        this.toast = toast
-        this.icons = icons
-    }
-    
-    welcome(expectedText) {
-        cy.contains(el.welcome, 'Bem-vindo,')
-            .should('be.visible')
-        cy.contains(el.name, expectedText)
-            .should('have.text', expectedText)
+        this.header = header
     }
 }
 
 export default new DashPage()
-

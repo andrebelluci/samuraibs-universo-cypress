@@ -3,73 +3,104 @@ import dashPage from '../support/pages/dash'
 
 describe('login', function () {
 
-    //login com sucesso
     context('quando realizar login com credenciais válidas', function () {
         const user = {
-            name: 'André Samurai',
-            email: 'andre@samuraibs.com',
+            name: 'André Login',
+            email: 'andre.login@samuraibs.com',
             password: 'pwd123',
             is_provider: true
         }
 
         before(function () {
-            cy.task('removeUser', user.email)
-                .then(function (result) {
-                    console.log(result)
-                })
-
-            cy.request('POST', 'http://localhost:3333/users', user)
-                .then(function (response) {
-                    expect(response.status).to.eq(200)
-                })
+            cy.postUser(user)
         })
+
         it('deve logar com sucesso', function () {
-            loginPage.go()            
-            loginPage.form(user)            
-            loginPage.login()     
-            loginPage.icons.shouldBeVisible(0)
-            loginPage.icons.shouldBeVisible(1)
-            dashPage.welcome(user.name)      
-            dashPage.icons.shouldBeVisible(0)            
+            loginPage.go()
+            loginPage.form(user)
+            loginPage.submit()
+            dashPage.header.userLoggedIn(user.name)
         })
     })
 
-    //senha incorreta
-    context('quando tentar realizar login com credenciais erradas', function () {
-        const credentials = [
-            { email: 'andr3@samuraibs.com', password: 'pwd123', msg: 'quando o e-mail não está cadastrado' },
-            { email: 'andre@samuraibs.com', password: 'abc123', msg: 'quando a senha está errada' }
-        ]
+    context('quando o usuário é válido mas a senha é incorreta', function () {
 
-        credentials.forEach(c => {
-            it('deve exibir mensagem de erro ' + c.msg, function () {
-                loginPage.go()
-                loginPage.form(c)
-                loginPage.login()
-                loginPage.toast.shouldHaveText('Ocorreu um erro ao fazer login, verifique suas credenciais.')
-            })
+        //let ao invés de const, constante não pode ter alteração de valor, precisa ser uma variável
+        let user = {
+            name: 'André IncorrectPass',
+            email: 'andre.incopass@samuraibs.com',
+            password: 'pwd123',
+            is_provider: true
+        }
+
+        before(function () {
+            cy.postUser(user)
+                .then(function () {
+                    //Alterar a senha da massa, não no banco
+                    user.password = 'abc123'
+                })
         })
+
+        it('deve notificar erro de credenciais ', function () {
+            loginPage.go()
+            loginPage.form(user)
+            loginPage.submit()
+
+            const message = 'Ocorreu um erro ao fazer login, verifique suas credenciais.'
+            loginPage.toast.shouldHaveText(message)
+        })
+
     })
 
-    //e-mail no formato inválido
+    context('quando o usuário é válido mas algo foi digitado incorretamente', function () {
+
+        //let ao invés de const, constante não pode ter alteração de valor, precisa ser uma variável
+        let user = {
+            name: 'André IncorrectUser',
+            email: 'andre.incouser@samuraibs.com',
+            password: 'pwd123',
+            is_provider: true
+        }
+
+        before(function () {
+            cy.postUser(user)
+                .then(function () {
+                    //Alterar a senha da massa, não no banco
+                    user.email = 'andre.incouse@samuraibs.com'
+                })
+        })
+
+        it('deve notificar erro de credenciais ', function () {
+            loginPage.go()
+            loginPage.form(user)
+            loginPage.submit()
+
+            const message = 'Ocorreu um erro ao fazer login, verifique suas credenciais.'
+            loginPage.toast.shouldHaveText(message)
+        })
+
+    })
+
     context('quando o e-mail não estiver no formato correto', function () {
         const credentials = [
             { email: 'andr3samuraibs.com', password: 'pwd123', msg: 'faltar arroba' },
-            { email: 'andre@samuraibs.', password: 'abc123', msg: 'não houver nada após o último ponto' },
-            { email: '@samuraibs.com', password: 'abc123', msg: 'faltar usuário do e-mail' }
+            { email: 'andre@samuraibs.', password: 'pwd123', msg: 'não houver nada após o último ponto' },
+            { email: '@samuraibs.com', password: 'pwd123', msg: 'faltar usuário do e-mail' }
         ]
+
+        before(function () {
+            loginPage.go()
+        })
 
         credentials.forEach(function (c) {
             it('deve exibir alerta informando que o e-mail não é válido quando ' + c.msg, function () {
-                loginPage.go()
                 loginPage.form(c)
-                loginPage.login()
-                loginPage.alertHaveText('Informe um email válido')
+                loginPage.submit()
+                loginPage.alert.haveText('Informe um email válido')
             })
         })
     })
 
-    //campos obrigatórios
     context('quando não preencho nenhum dos campos', function () {
         const alertMessages = [
             'E-mail é obrigatório',
@@ -78,12 +109,12 @@ describe('login', function () {
 
         before(function () {
             loginPage.go()
-            loginPage.login()
+            loginPage.submit()
         })
 
         alertMessages.forEach(function (alert) {
             it('deve exibir ' + alert.toLowerCase(), function () {
-                loginPage.alertHaveText(alert)
+                loginPage.alert.haveText(alert)
             })
         })
     })

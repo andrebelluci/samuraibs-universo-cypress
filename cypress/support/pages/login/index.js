@@ -1,14 +1,13 @@
 import { el } from './elements'
 import toast from '../../components/toast'
-import icons from '../../components/icons'
-
+import alert from '../../components/alert'
 
 class LoginPage {
 
     //função executada automaticamente
     constructor() {
         this.toast = toast
-        this.icons = icons
+        this.alert = alert
     }
 
     go() {
@@ -17,20 +16,17 @@ class LoginPage {
 
     form(user) {
         cy.get(el.email)
+            .clear()
             .type(user.email)
         cy.get(el.password)
+            .clear()
             .type(user.password)
     }
 
-    login(){
-        cy.contains(el.loginButton)
+    submit(){
+        cy.contains(el.signIn)
             .click()
     } 
-    
-    alertHaveText(expectedText) {
-        cy.contains('.alert-error', expectedText)
-            .should('be.visible')
-    }
 }
 
 export default new LoginPage()
