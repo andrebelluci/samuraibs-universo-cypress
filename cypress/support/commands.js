@@ -25,6 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import moment from 'moment'
+import { recoveryAcc } from '../support/factories/recoverypass'
 
 Cypress.Commands.add('postUser', function (user) {
     cy.task('removeUser', user.email)
@@ -44,7 +45,7 @@ Cypress.Commands.add('recoveryPass', function (email) {
         .then(function (response) {
             expect(response.status).to.eq(204)
 
-            cy.task('findToken', this.data.email)
+            cy.task('findToken', recoveryAcc.email)
                 .then(function (result) {
                     //console.log(result.token)
                     Cypress.env('recoveryToken', result.token)
