@@ -4,6 +4,8 @@ class Toast {
     shouldHaveText(expectText) {
         cy.get(el.toast, { timeout: 10000 })
             .should('be.visible')
+            //screenshot de elemento com animação sai com a animação 100% visível
+            .should('have.css', 'opacity', '1', { timeout: 1500 })
             .find('p')
             .should('have.text', expectText)
     }

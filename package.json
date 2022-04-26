@@ -11,5 +11,6 @@
     "moment": "^2.29.3",
     "pg": "^8.7.3",
     "underscore": "^1.13.3"
-  }
+  },
+  "dependencies": {}
 }
