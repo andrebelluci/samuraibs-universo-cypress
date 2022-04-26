@@ -23,7 +23,7 @@ class ResetPassPage {
     }
 
     submit() {
-        cy.contains(el.changePassButton, { timeout: 7000 })
+        cy.contains(el.changePassButton)
             .click()
     }
 }
