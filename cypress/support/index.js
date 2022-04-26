@@ -21,7 +21,7 @@ import './commands'
 
 
 //Screenshots para todos os testes
-afterEach(function(){
-    //cy.wait(1500)
-    cy.screenshot()
-})
+// afterEach(function(){
+//     //cy.wait(1500)
+//     cy.screenshot()
+// })

@@ -9,6 +9,8 @@ class ResetPassPage {
 
     go(token) {
         cy.visit('reset-password?token=' + token)
+        cy.contains(el.title)
+            .should('be.visible')
     }
 
     form(newPass, confirmPass) {
@@ -21,7 +23,7 @@ class ResetPassPage {
     }
 
     submit() {
-        cy.contains(el.changePassButton, {timeout: 7000})
+        cy.contains(el.changePassButton, { timeout: 7000 })
             .click()
     }
 }
