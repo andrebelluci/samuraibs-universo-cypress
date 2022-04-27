@@ -1,3 +1,5 @@
+[![samuraibs-web](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/x123t6&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/x123t6/runs)
+
 # Welcome to StackEdit! --- EXAMPLE
 
 Hi! I'm your first Markdown file in **StackEdit**. If you want to learn about StackEdit, you can read me. If you want to play with Markdown, you can edit me. Once you have finished with me, you can create new files by opening the **file explorer** on the left corner of the navigation bar.
